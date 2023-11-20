@@ -8,6 +8,7 @@ const dummyData = require("./data/dummy-data");
 const Category = require("./models/category");
 const Blog = require("./models/blog");
 const User = require("./models/user");
+require("dotenv").config();
 
 const app = express();
 
@@ -47,10 +48,10 @@ Blog.belongsToMany(Category, { through: "blogCategories" });
 Category.belongsToMany(Blog, { through: "blogCategories" });
 
 (async () => {
-  await sequelize.sync({ force: true });
+  await sequelize.sync({ alter: true });
   await dummyData();
 })();
 
-app.listen(3000, () => {
-  console.log("listening on port 3000");
+app.listen(process.env.PORT, () => {
+  console.log("listening on port ", process.env.PORT);
 });

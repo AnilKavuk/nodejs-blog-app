@@ -1,4 +1,4 @@
-const { size } = require("../config");
+require("dotenv").config();
 const Blog = require("../models/blog");
 const Category = require("../models/category");
 const { Op } = require("sequelize");
@@ -47,7 +47,7 @@ const blogList = async (req, res) => {
       title: "Tüm Kurslar",
       blogs: rows,
       totalItems: count,
-      totalPages: Math.ceil(count / size),
+      totalPages: Math.ceil(count / process.env.SIZE),
       currentPage: page,
       categories: categories,
       selectedCategory: null,
