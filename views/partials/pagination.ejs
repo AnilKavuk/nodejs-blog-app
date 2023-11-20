@@ -1,0 +1,21 @@
+<% if (totalPages>1) { %>
+<nav class="mt-5">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a href="?page=0" class="page-link">First page</a>
+    </li>
+    <% for( let index = 0; index < totalPages; index++ ) { %>
+    <li class="page-item">
+      <a
+        href="?page=<%= index %>"
+        class="page-link <%= (index==currentPage ? 'active':'') %>">
+        <%= index+1 %>
+      </a>
+    </li>
+    <% } %>
+    <li class="page-item">
+      <a href="?page=<%= totalPages-1 %>" class="page-link">Last page</a>
+    </li>
+  </ul>
+</nav>
+<% } %>
