@@ -8,7 +8,7 @@ const dummyData = require("./data/dummy-data");
 const Category = require("./models/category");
 const Blog = require("./models/blog");
 const User = require("./models/user");
-require("dotenv").config();
+const { port } = require("./config");
 
 const app = express();
 
@@ -52,6 +52,6 @@ Category.belongsToMany(Blog, { through: "blogCategories" });
   await dummyData();
 })();
 
-app.listen(process.env.PORT, () => {
+app.listen(port, () => {
   console.log("listening on port ", process.env.PORT);
 });
