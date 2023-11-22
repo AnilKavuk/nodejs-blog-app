@@ -53,5 +53,5 @@ Category.belongsToMany(Blog, { through: "blogCategories" });
 })();
 
 app.listen(port, () => {
-  console.log("listening on port ", process.env.PORT);
+  console.log("listening on port ", port);
 });
