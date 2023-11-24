@@ -14,8 +14,10 @@ const db = {
   database: envs.DB_NAME,
 };
 
-const size = envs.SIZE;
+const size = 3;
 
 const port = envs.PORT;
 
-module.exports = { db, size, port };
+const saltRounds = envs.SALT_ROUNDS;
+
+module.exports = { db, size, port, saltRounds };

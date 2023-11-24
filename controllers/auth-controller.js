@@ -1,3 +1,4 @@
+const { saltRounds } = require("../config");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
@@ -17,7 +18,7 @@ const postRegister = async (req, res) => {
     email: req.body.email,
     password: req.body.password,
   };
-  data.password = bcrypt.hashSync(data.password, 10);
+  data.password = bcrypt.hashSync(data.password, saltRounds);
   try {
     await User.create({
       fullName: data.name,
@@ -30,4 +31,49 @@ const postRegister = async (req, res) => {
   }
 };
 
-module.exports = { getRegister, postRegister };
+const getLogin = async (req, res) => {
+  try {
+    return res.render("auth/login", {
+      title: "login",
+    });
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+const postLogin = async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  try {
+    const user = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) {
+      return res.render("auth/login", {
+        title: "login",
+        message: "email or password wrong!",
+      });
+    }
+
+    //password checking
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (passwordMatch) {
+      //sign in
+      return res.redirect("/");
+    } else {
+      return res.render("auth/login", {
+        title: "login",
+        message: "email or password wrong!",
+      });
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+module.exports = { getRegister, postRegister, getLogin, postLogin };
