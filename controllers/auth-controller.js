@@ -63,7 +63,8 @@ const postLogin = async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (passwordMatch) {
-      //sign in
+      req.session.isAuth = true;
+      req.session.fullName = user.fullName;
       return res.redirect("/");
     } else {
       return res.render("auth/login", {
@@ -76,4 +77,13 @@ const postLogin = async (req, res) => {
   }
 };
 
-module.exports = { getRegister, postRegister, getLogin, postLogin };
+const getLogout = async (req, res) => {
+  try {
+    await req.session.destroy();
+    return res.redirect("login");
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+module.exports = { getRegister, postRegister, getLogin, postLogin, getLogout };

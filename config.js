@@ -20,4 +20,6 @@ const port = envs.PORT;
 
 const saltRounds = envs.SALT_ROUNDS;
 
-module.exports = { db, size, port, saltRounds };
+const secretKey = envs.SECRET_KEY;
+
+module.exports = { db, size, port, saltRounds, secretKey };
