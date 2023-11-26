@@ -78,12 +78,13 @@
                 class="d-inline-block"
                 action="/admin/category/remove"
                 method="post">
+                <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
                 <input type="hidden" name="blogId" value="<%= blog.id %>" />
                 <input
                   type="hidden"
                   name="categoryId"
                   value="<%= category.id %>" />
-                  <input
+                <input
                   type="hidden"
                   name="categoryUrl"
                   value="<%= category.url %>" />

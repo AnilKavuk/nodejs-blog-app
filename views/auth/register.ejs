@@ -8,6 +8,7 @@
     <%- include("../partials/nav") %>
     <div class="container mt-3">
       <form method="post">
+        <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
         <div class="row my-5 gx-5">
           <div class="col-md-10">
             <div class="row mb-3">

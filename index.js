@@ -25,6 +25,7 @@ const { port, secretKey } = require("./config");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const SequlizeStore = require("connect-session-sequelize")(session.Store);
+const csurf = require("csurf");
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use(
 );
 
 app.use(locals);
+app.use(csurf());
 
 app.use("/libs", express.static(path.join(__dirname, "node_modules")));
 app.use("/static", express.static(path.join(__dirname, "public")));

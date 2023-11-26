@@ -9,12 +9,14 @@ const {
   getLogout,
 } = require("../controllers/auth-controller");
 
-router.get("/register", getRegister);
+const csrf = require("../middlewares/csrf-middleware");
+
+router.get("/register", csrf, getRegister);
 router.post("/register", postRegister);
 
-router.get("/login", getLogin);
+router.get("/login", csrf, getLogin);
 router.post("/login", postLogin);
 
-router.get("/logout", getLogout);
+router.get("/logout", csrf, getLogout);
 
 module.exports = router;

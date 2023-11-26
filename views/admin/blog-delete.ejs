@@ -15,6 +15,7 @@
               Do you want to delete the blog entry named ?
             </p>
             <form method="post">
+              <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
               <input type="hidden" name="blogUrl" value="<%= blog.url %>" />
               <button class="btn btn-danger" type="submit">Yes</button>
               <a href="/admin/blogs" class="btn btn-primary">No</a>

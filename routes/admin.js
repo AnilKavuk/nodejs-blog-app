@@ -19,14 +19,15 @@ const {
 const router = express.Router();
 
 const imgUpload = require("../helpers/image-upload");
-const isAuth = require("../middlewares/authMiddleware");
+const isAuth = require("../middlewares/auth-middleware");
+const csrf = require("../middlewares/csrf-middleware");
 
 //? admin blog route
-router.get("/blog/delete/:slugs", isAuth, getBlogDelete);
+router.get("/blog/delete/:slugs", isAuth, csrf, getBlogDelete);
 
 router.post("/blog/delete/:slugs", isAuth, postBlogDelete);
 
-router.get("/blog/create", isAuth, getBlogCreate);
+router.get("/blog/create", isAuth, csrf, getBlogCreate);
 
 router.post(
   "/blog/create",
@@ -35,7 +36,7 @@ router.post(
   postBlogCreate
 );
 
-router.get("/blogs/:slugs", isAuth, getBlogEdit);
+router.get("/blogs/:slugs", isAuth, csrf, getBlogEdit);
 
 router.post(
   "/blogs/:slugs",
@@ -44,19 +45,19 @@ router.post(
   postBlogEdit
 );
 
-router.get("/blogs", isAuth, getBlogList);
+router.get("/blogs", isAuth, csrf, getBlogList);
 //? admin blog route
 
 //? admin category route
-router.get("/category/create", isAuth, getCategoryCreate);
+router.get("/category/create", isAuth, csrf, getCategoryCreate);
 
 router.post("/category/create", isAuth, postCategoryCreate);
 
-router.get("/category/edit/:slugs", isAuth, getCategoryEdit);
+router.get("/category/edit/:slugs", isAuth, csrf, getCategoryEdit);
 
 router.post("/category/edit/:slugs", isAuth, postCategoryEdit);
 
-router.get("/category/delete/:slugs", isAuth, getCategoryDelete);
+router.get("/category/delete/:slugs", isAuth, csrf, getCategoryDelete);
 
 router.post("/category/delete/:slugs", isAuth, postCategoryDelete);
 

@@ -13,18 +13,27 @@ const getRegister = async (req, res) => {
 };
 
 const postRegister = async (req, res) => {
-  const data = {
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-  };
-  data.password = bcrypt.hashSync(data.password, saltRounds);
+  const data = req.body;
+  data.password = bcrypt.hashSync(req.body.password, Number(saltRounds));
+
   try {
+    const user = await User.findOne({ where: { email: data.email } });
+    if (user) {
+      req.session.message = {
+        text: "You have already registered with the e-mail address you entered.",
+        class: "warning",
+      };
+      return res.redirect("login");
+    }
     await User.create({
       fullName: data.name,
       email: data.email,
       password: data.password,
     });
+    req.session.message = {
+      text: "You can log in to your account.",
+      class: "success",
+    };
     return res.redirect("login");
   } catch (err) {
     console.warn(err);
@@ -32,9 +41,13 @@ const postRegister = async (req, res) => {
 };
 
 const getLogin = async (req, res) => {
+  const message = req.session.message;
+  delete req.session.message;
   try {
     return res.render("auth/login", {
       title: "login",
+      message: message,
+      csrfToken: req.csrfToken(),
     });
   } catch (err) {
     console.warn(err);
@@ -55,7 +68,10 @@ const postLogin = async (req, res) => {
     if (!user) {
       return res.render("auth/login", {
         title: "login",
-        message: "email or password wrong!",
+        message: {
+          text: "email or password wrong!",
+          class: "danger",
+        },
       });
     }
 
@@ -65,11 +81,15 @@ const postLogin = async (req, res) => {
     if (passwordMatch) {
       req.session.isAuth = true;
       req.session.fullName = user.fullName;
-      return res.redirect("/");
+      const url = req.query.returnUrl || "/";
+      return res.redirect(url);
     } else {
       return res.render("auth/login", {
         title: "login",
-        message: "email or password wrong!",
+        message: {
+          text: "email or password wrong!",
+          class: "danger",
+        },
       });
     }
   } catch (err) {
