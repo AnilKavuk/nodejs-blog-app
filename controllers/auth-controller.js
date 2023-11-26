@@ -1,6 +1,7 @@
-const { saltRounds } = require("../config");
+const { saltRounds, email } = require("../config");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const emailService = require("../helpers/send-mail");
 
 const getRegister = async (req, res) => {
   try {
@@ -25,11 +26,27 @@ const postRegister = async (req, res) => {
       };
       return res.redirect("login");
     }
-    await User.create({
+    const newUser = await User.create({
       fullName: data.name,
       email: data.email,
       password: data.password,
     });
+
+    emailService.sendMail(
+      {
+        from: email.from,
+        to: newUser.email,
+        subject: "Hesabınız oluşturuldu",
+        text: "Hesabınız başarılı bir şekilde oluşturuldu",
+      },
+      (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log("Message sent: %s", info.messageId);
+      }
+    );
+
     req.session.message = {
       text: "You can log in to your account.",
       class: "success",

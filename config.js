@@ -22,4 +22,13 @@ const saltRounds = envs.SALT_ROUNDS;
 
 const secretKey = envs.SECRET_KEY;
 
-module.exports = { db, size, port, saltRounds, secretKey };
+const email = {
+  username: envs.EMAIL_USERNAME,
+  password: envs.EMAIL_PASSWORD,
+  from: envs.EMAIL_FROM,
+  clientId: envs.CLIENT_ID,
+  clientSecret: envs.CLIENT_SECRET,
+  refreshToken: envs.REFRESH_TOKEN,
+};
+
+module.exports = { db, size, port, saltRounds, secretKey, email };
