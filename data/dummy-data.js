@@ -64,7 +64,7 @@ const populate = async () => {
           "(Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
           "Node.js kursumuza katılmak için temel düzeyde Javascript programlama bilgisi ve temel düzelde HTML/CSS bilgisine sahip olmanız yeterlidir. Kursumuz sıfırdan ileri seviyeye tüm Node.js konularını içeriyor ve her konu en temelden detaylı bir şekilde anlatılıyor. Ayrıca her bölümde öğrendiklerimizi uygulayabileceğimiz gerçek bir projeyi sıfırdan ileri seviyeye adım adım geliştiriyoruz.",
-        image: "4.jpeg",
+        image: "3.jpeg",
         homePage: true,
         approval: true,
       },
@@ -75,7 +75,7 @@ const populate = async () => {
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
           "Node.js kursumuza katılmak için temel düzeyde Javascript programlama bilgisi ve temel düzelde HTML/CSS bilgisine sahip olmanız yeterlidir. Kursumuz sıfırdan ileri seviyeye tüm Node.js konularını içeriyor ve her konu en temelden detaylı bir şekilde anlatılıyor. Ayrıca her bölümde öğrendiklerimizi uygulayabileceğimiz gerçek bir projeyi sıfırdan ileri seviyeye adım adım geliştiriyoruz.",
-        image: "4.jpeg",
+        image: "3.jpeg",
         homePage: true,
         approval: true,
       },
@@ -86,7 +86,7 @@ const populate = async () => {
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
           "Node.js kursumuza katılmak için temel düzeyde Javascript programlama bilgisi ve temel düzelde HTML/CSS bilgisine sahip olmanız yeterlidir. Kursumuz sıfırdan ileri seviyeye tüm Node.js konularını içeriyor ve her konu en temelden detaylı bir şekilde anlatılıyor. Ayrıca her bölümde öğrendiklerimizi uygulayabileceğimiz gerçek bir projeyi sıfırdan ileri seviyeye adım adım geliştiriyoruz.",
-        image: "4.jpeg",
+        image: "1.jpeg",
         homePage: true,
         approval: true,
       },
@@ -97,7 +97,7 @@ const populate = async () => {
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
           "Node.js kursumuza katılmak için temel düzeyde Javascript programlama bilgisi ve temel düzelde HTML/CSS bilgisine sahip olmanız yeterlidir. Kursumuz sıfırdan ileri seviyeye tüm Node.js konularını içeriyor ve her konu en temelden detaylı bir şekilde anlatılıyor. Ayrıca her bölümde öğrendiklerimizi uygulayabileceğimiz gerçek bir projeyi sıfırdan ileri seviyeye adım adım geliştiriyoruz.",
-        image: "4.jpeg",
+        image: "6.jpeg",
         homePage: true,
         approval: true,
       },
@@ -108,7 +108,7 @@ const populate = async () => {
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
           "Node.js kursumuza katılmak için temel düzeyde Javascript programlama bilgisi ve temel düzelde HTML/CSS bilgisine sahip olmanız yeterlidir. Kursumuz sıfırdan ileri seviyeye tüm Node.js konularını içeriyor ve her konu en temelden detaylı bir şekilde anlatılıyor. Ayrıca her bölümde öğrendiklerimizi uygulayabileceğimiz gerçek bir projeyi sıfırdan ileri seviyeye adım adım geliştiriyoruz.",
-        image: "4.jpeg",
+        image: "3.jpeg",
         homePage: true,
         approval: true,
       },
@@ -119,7 +119,7 @@ const populate = async () => {
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
           "Node.js kursumuza katılmak için temel düzeyde Javascript programlama bilgisi ve temel düzelde HTML/CSS bilgisine sahip olmanız yeterlidir. Kursumuz sıfırdan ileri seviyeye tüm Node.js konularını içeriyor ve her konu en temelden detaylı bir şekilde anlatılıyor. Ayrıca her bölümde öğrendiklerimizi uygulayabileceğimiz gerçek bir projeyi sıfırdan ileri seviyeye adım adım geliştiriyoruz.",
-        image: "4.jpeg",
+        image: "2.jpeg",
         homePage: true,
         approval: true,
       },
@@ -130,7 +130,7 @@ const populate = async () => {
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
           "Node.js kursumuza katılmak için temel düzeyde Javascript programlama bilgisi ve temel düzelde HTML/CSS bilgisine sahip olmanız yeterlidir. Kursumuz sıfırdan ileri seviyeye tüm Node.js konularını içeriyor ve her konu en temelden detaylı bir şekilde anlatılıyor. Ayrıca her bölümde öğrendiklerimizi uygulayabileceğimiz gerçek bir projeyi sıfırdan ileri seviyeye adım adım geliştiriyoruz.",
-        image: "4.jpeg",
+        image: "3.jpeg",
         homePage: true,
         approval: true,
       },

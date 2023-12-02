@@ -36,8 +36,11 @@ const postRegister = async (req, res) => {
       {
         from: email.from,
         to: newUser.email,
-        subject: "Hesabınız oluşturuldu",
-        text: "Hesabınız başarılı bir şekilde oluşturuldu",
+        subject: "Your account has been created",
+        text: `Hi ${newUser.fullName},
+        
+        You have successfully registered to the blog page.
+                `,
       },
       (error, info) => {
         if (error) {
