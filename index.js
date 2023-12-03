@@ -66,8 +66,8 @@ Blog.belongsToMany(Category, { through: "blogCategories" });
 Category.belongsToMany(Blog, { through: "blogCategories" });
 
 (async () => {
-  await sequelize.sync({ alter: true });
-  await dummyData();
+  // await sequelize.sync({ force: true });
+  // await dummyData();
 })();
 
 app.listen(port, () => {

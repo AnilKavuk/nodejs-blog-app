@@ -2,6 +2,7 @@ const { saltRounds, email } = require("../config");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const emailService = require("../helpers/send-mail");
+const crypto = require("crypto");
 
 const getRegister = async (req, res) => {
   try {
@@ -38,8 +39,7 @@ const postRegister = async (req, res) => {
         to: newUser.email,
         subject: "Your account has been created",
         text: `Hi ${newUser.fullName},
-        
-        You have successfully registered to the blog page.
+  You have successfully registered to the blog page.
                 `,
       },
       (error, info) => {
@@ -92,6 +92,7 @@ const postLogin = async (req, res) => {
           text: "email or password wrong!",
           class: "danger",
         },
+        csrfToken: req.csrfToken(),
       });
     }
 
@@ -126,4 +127,68 @@ const getLogout = async (req, res) => {
   }
 };
 
-module.exports = { getRegister, postRegister, getLogin, postLogin, getLogout };
+const getReset = async (req, res) => {
+  const message = req.session.message;
+  delete req.session.message;
+  try {
+    return res.render("auth/reset-password", {
+      title: "reset password",
+      message: message,
+    });
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+const postReset = async (req, res) => {
+  console.warn("tesssss");
+  const email = req.body.email;
+  try {
+    var token = crypto.randomBytes(32).toString("hex");
+    const user = await User.findOne({ where: { email: email } });
+
+    if (!user) {
+      req.session.message = {
+        text: "Email not found",
+        class: "warning",
+      };
+      return res.redirect("reset-password");
+    }
+
+    user.resetToken = token;
+    user.ResetTokenExpiration = Date.now() + 1000 * 60 * 60;
+    await user.save();
+
+    const mailOptions = {
+      from: `"Hi Blog" <${email.from}>`,
+      to: user.email,
+      subject: "Reset Password",
+      text: "This is the text content of the email.",
+      html: ` 
+                  <p>Click on the link below to reset your password.</p>
+                  <p>
+                    <a href="http://127.0.0.1:3000/account/reset-password/${token}" class="btn b  tn-link">Reset password</a>
+                  </p>
+       `,
+    };
+    let info = await emailService.sendMail(mailOptions);
+    console.warn(info);
+    req.session.message = {
+      text: "Check Email to reset password",
+      class: "success",
+    };
+    return res.redirect("login");
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+module.exports = {
+  getRegister,
+  postRegister,
+  getLogin,
+  postLogin,
+  getLogout,
+  getReset,
+  postReset,
+};
