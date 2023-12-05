@@ -9,6 +9,8 @@ const {
   getLogout,
   getReset,
   postReset,
+  getNewPassword,
+  postNewPassword,
 } = require("../controllers/auth-controller");
 
 const csrf = require("../middlewares/csrf-middleware");
@@ -21,6 +23,9 @@ router.post("/login", postLogin);
 
 router.get("/reset-password", csrf, getReset);
 router.post("/reset-password", postReset);
+
+router.get("/new-password/:token", csrf, getNewPassword);
+router.post("/new-password", postNewPassword);
 
 router.get("/logout", csrf, getLogout);
 

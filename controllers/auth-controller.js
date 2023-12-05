@@ -3,6 +3,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const emailService = require("../helpers/send-mail");
 const crypto = require("crypto");
+const { Op } = require("sequelize");
 
 const getRegister = async (req, res) => {
   try {
@@ -33,23 +34,17 @@ const postRegister = async (req, res) => {
       password: data.password,
     });
 
-    emailService.sendMail(
-      {
-        from: email.from,
-        to: newUser.email,
-        subject: "Your account has been created",
-        text: `Hi ${newUser.fullName},
+    const mailOptions = {
+      from: email.from,
+      to: newUser.email,
+      subject: "Your account has been created",
+      text: `Hi ${newUser.fullName},
   You have successfully registered to the blog page.
                 `,
-      },
-      (error, info) => {
-        if (error) {
-          return console.log(error);
-        }
-        console.log("Message sent: %s", info.messageId);
-      }
-    );
+    };
 
+    const info = await emailService.sendMail(mailOptions);
+    console.warn(info);
     req.session.message = {
       text: "You can log in to your account.",
       class: "success",
@@ -141,7 +136,6 @@ const getReset = async (req, res) => {
 };
 
 const postReset = async (req, res) => {
-  console.warn("tesssss");
   const email = req.body.email;
   try {
     var token = crypto.randomBytes(32).toString("hex");
@@ -156,7 +150,7 @@ const postReset = async (req, res) => {
     }
 
     user.resetToken = token;
-    user.ResetTokenExpiration = Date.now() + 1000 * 60 * 60;
+    user.resetTokenExpiration = Date.now() + 1000 * 60 * 60;
     await user.save();
 
     const mailOptions = {
@@ -165,16 +159,88 @@ const postReset = async (req, res) => {
       subject: "Reset Password",
       text: "This is the text content of the email.",
       html: ` 
-                  <p>Click on the link below to reset your password.</p>
-                  <p>
-                    <a href="http://127.0.0.1:3000/account/reset-password/${token}" class="btn b  tn-link">Reset password</a>
-                  </p>
+      <p>Click on the link below to reset your password.</p>
+      <p>
+        <a href="http://127.0.0.1:3000/account/new-password/${token}" target="_blank" class="btn b  tn-link">Reset password</a>
+      </p>
        `,
     };
-    let info = await emailService.sendMail(mailOptions);
+    const info = await emailService.sendMail(mailOptions);
     console.warn(info);
     req.session.message = {
       text: "Check Email to reset password",
+      class: "success",
+    };
+    return res.redirect("login");
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+const getNewPassword = async (req, res) => {
+  const token = req.params.token;
+  try {
+    const user = await User.findOne({
+      where: {
+        resetToken: token,
+        resetTokenExpiration: {
+          [Op.gt]: Date.now(),
+        },
+      },
+    });
+
+    if (!user) {
+      req.session.message = {
+        text: "An unexpected problem was encountered",
+        class: "danger",
+      };
+
+      res.render("auth/login", {
+        title: "login",
+      });
+
+      return res.redirect("login");
+    }
+    return res.render("auth/new-password", {
+      title: "new password",
+      token: token,
+      userId: user.id,
+    });
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+const postNewPassword = async (req, res) => {
+  const token = req.body.token;
+  const userId = req.body.userId;
+  const newPassword = req.body.password;
+  try {
+    const user = await User.findOne({
+      where: {
+        resetToken: token,
+        resetTokenExpiration: {
+          [Op.gt]: Date.now(),
+        },
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      req.session.message = {
+        text: "An unexpected problem was encountered",
+        class: "danger",
+      };
+      return res.redirect("login");
+    }
+
+    user.password = await bcrypt.hashSync(newPassword, Number(saltRounds));
+    user.resetToken = null;
+    user.resetTokenExpiration = null;
+    await user.save();
+
+    req.session.message = {
+      text: "Your password has been successfully updated",
       class: "success",
     };
     return res.redirect("login");
@@ -191,4 +257,6 @@ module.exports = {
   getLogout,
   getReset,
   postReset,
+  getNewPassword,
+  postNewPassword,
 };
