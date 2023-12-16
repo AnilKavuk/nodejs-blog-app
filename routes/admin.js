@@ -15,6 +15,7 @@ const {
   postCategoryDelete,
   getCategoryList,
   getCategoryRemove,
+  getRoles,
 } = require("../controllers/admin-controller");
 const router = express.Router();
 
@@ -65,5 +66,11 @@ router.post("/category/remove", isAuth, getCategoryRemove);
 
 router.get("/categories", isAuth, getCategoryList);
 //? admin category route
+
+//? admin role route
+router.get("/roles", isAuth, getRoles);
+// router.get("/roles/:roleId", isAuth, csrf, getRolesEdit);
+// router.post("/roles/remove", isAuth, postRolesRemove);
+//? admin role route
 
 module.exports = router;

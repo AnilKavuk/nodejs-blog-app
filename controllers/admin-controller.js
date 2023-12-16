@@ -1,7 +1,9 @@
 const Blog = require("../models/blog");
 const Category = require("../models/category");
+const Role = require("../models/role");
+const User = require("../models/user");
 const fs = require("fs");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const sequelize = require("../data/db");
 const slugField = require("../helpers/slug-field");
 
@@ -336,6 +338,32 @@ const getCategoryList = async (req, res) => {
 };
 //? admin category route
 
+//? admin role route
+const getRoles = async (req, res) => {
+  try {
+    const roles = await Role.findAll({
+      attributes: {
+        include: [
+          "role.id",
+          "role.roleName",
+          [sequelize.fn("COUNT", sequelize.col("users.id")), "user_count"],
+        ],
+      },
+      include: [{ model: User, attributes: ["id"] }],
+      group: ["role.id"],
+      raw: true,
+      includeIgnoreAttributes: false,
+    });
+
+    res.render("admin/role-list", {
+      title: "role list",
+      roles: roles,
+    });
+  } catch (err) {
+    console.warn(err);
+  }
+};
+//? admin role route
 module.exports = {
   getBlogDelete,
   postBlogDelete,
@@ -352,4 +380,5 @@ module.exports = {
   postCategoryDelete,
   getCategoryList,
   getCategoryRemove,
+  getRoles,
 };

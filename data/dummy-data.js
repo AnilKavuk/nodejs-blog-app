@@ -1,11 +1,42 @@
 const Category = require("../models/category");
 const Blog = require("../models/blog");
 const slugField = require("../helpers/slug-field");
+const bcrypt = require("bcrypt");
+const Role = require("../models/role");
+const User = require("../models/user");
 
 const populate = async () => {
   const count = await Category.count();
 
   if (count == 0) {
+    const users = await User.bulkCreate([
+      {
+        fullName: "Çınar Kavuk",
+        email: "cinar@info.com",
+        password: await bcrypt.hashSync("1234", 10),
+      },
+      {
+        fullName: "Anıl Kavuk",
+        email: "anil@info.com",
+        password: await bcrypt.hashSync("1234", 10),
+      },
+      {
+        fullName: "Akın Kavuk",
+        email: "akin@info.com",
+        password: await bcrypt.hashSync("1234", 10),
+      },
+    ]);
+
+    const roles = await Role.bulkCreate([
+      { roleName: "admin" },
+      { roleName: "moderator" },
+      { roleName: "guest" },
+    ]);
+
+    await users[0].addRole(roles[1]); // moderator
+    await users[1].addRole(roles[0]); // admin
+    await users[2].addRole(roles[2]); // guest
+
     const categories = await Category.bulkCreate([
       {
         name: "Web Geliştirme",

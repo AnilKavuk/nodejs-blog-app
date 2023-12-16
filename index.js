@@ -18,6 +18,7 @@ const locals = require("./middlewares/locals");
 const Category = require("./models/category");
 const Blog = require("./models/blog");
 const User = require("./models/user");
+const Role = require("./models/role");
 
 // configs
 const { port, secretKey } = require("./config");
@@ -64,6 +65,9 @@ User.hasMany(Blog);
 
 Blog.belongsToMany(Category, { through: "blogCategories" });
 Category.belongsToMany(Blog, { through: "blogCategories" });
+
+Role.belongsToMany(User, { through: "userRole" });
+User.belongsToMany(Role, { through: "userRole" });
 
 (async () => {
   // await sequelize.sync({ force: true });
