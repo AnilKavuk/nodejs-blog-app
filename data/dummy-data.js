@@ -28,9 +28,9 @@ const populate = async () => {
     ]);
 
     const roles = await Role.bulkCreate([
-      { roleName: "admin" },
-      { roleName: "moderator" },
-      { roleName: "guest" },
+      { roleName: "admin", url: "admin" },
+      { roleName: "moderator", url: "moderator" },
+      { roleName: "guest", url: "guest" },
     ]);
 
     await users[0].addRole(roles[1]); // moderator

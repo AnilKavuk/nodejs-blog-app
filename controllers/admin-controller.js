@@ -354,7 +354,33 @@ const getRoles = async (req, res) => {
       raw: true,
       includeIgnoreAttributes: false,
     });
+    console.log("roles: ", roles);
+    res.render("admin/role-list", {
+      title: "role list",
+      roles: roles,
+    });
+  } catch (err) {
+    console.warn(err);
+  }
+};
 
+const getRolesEdit = async (req, res) => {
+  try {
+    const roles = await Role.findAll({
+      attributes: {
+        include: [
+          "role.id",
+          "role.roleName",
+          "role.url",
+          [(sequelize.fn("COUNT", sequelize.col("users.id")), "user_count")],
+        ],
+      },
+      include: [{ model: User, attributes: ["id"] }],
+      group: ["role.id"],
+      raw: true,
+      includeIgnoreAttributes: false,
+    });
+    console.log("roles: ", roles);
     res.render("admin/role-list", {
       title: "role list",
       roles: roles,
@@ -381,4 +407,5 @@ module.exports = {
   getCategoryList,
   getCategoryRemove,
   getRoles,
+  getRolesEdit,
 };

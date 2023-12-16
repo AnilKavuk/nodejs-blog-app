@@ -16,6 +16,7 @@ const {
   getCategoryList,
   getCategoryRemove,
   getRoles,
+  getRolesEdit,
 } = require("../controllers/admin-controller");
 const router = express.Router();
 
@@ -69,7 +70,8 @@ router.get("/categories", isAuth, getCategoryList);
 
 //? admin role route
 router.get("/roles", isAuth, getRoles);
-// router.get("/roles/:roleId", isAuth, csrf, getRolesEdit);
+
+// router.get("/roles/:slugs", isAuth, csrf, getRolesEdit);
 // router.post("/roles/remove", isAuth, postRolesRemove);
 //? admin role route
 
