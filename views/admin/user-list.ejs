@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+</head>
+
+<body>
+  <%- include("../partials/nav") %>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-12 mt-3">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th style="width: 50px; text-align: center">id</th>
+              <th>Name</th>
+              <th>email</th>
+              <th>roles</th>
+              <th style="width: 130px"></th>
+            </tr>
+          </thead>
+          <% users.forEach(user => { %>
+          <tr>
+            <td>
+              <div class="d-flex justify-content-center align-items-center">
+                #<%= user.id %>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex"><%= user.fullName %></div>
+            </td>
+            <td>
+              <div class="d-flex"><%= user.email %></div>
+            </td>
+            <td>
+              <div class="d-flex">
+                <% user.roles.forEach(role => { %>
+                <%=role.roleName%><br />
+                <% }) %>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center align-items-center">
+                <a class="btn btn-sm btn-primary" style="margin-right: 10px" href="/admin/users/edit/<%= user.id%>">
+                  edit
+                </a>
+                <a class="btn btn-sm btn-danger" href="/admin/user/delete/<%= user.id %>">
+                  delete
+                </a>
+              </div>
+            </td>
+          </tr>
+          <% }) %>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

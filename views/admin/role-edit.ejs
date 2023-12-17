@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+
+  <body>
+    <%- include("../partials/nav") %>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-md-12 mt-3">
+          <form method="post">
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+            <input type="hidden" name="roleId" value="<%= role.id %>" />
+            <div class="d-flex justify-content-center align-items-center mb-3">
+              <label for="name" class="col-sm-2 col-form-label">
+                <strong class="fs-4">Role Name</strong>
+              </label>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mb-3">
+              <div class="col-sm-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="roleName"
+                  name="roleName"
+                  value="<%= role.roleName %>" />
+              </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mb-3">
+              <div>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th style="width: 50px; text-align: center">id</th>
+              <th style="width: 150px">username</th>
+              <th>email</th>
+              <th style="width: 250px"></th>
+            </tr>
+          </thead>
+          <% users.forEach(user => { %>
+          <tr>
+            <td>
+              <div class="d-flex justify-content-center">#<%= user.id %></div>
+            </td>
+            <td><%= user.fullName %></td>
+            <td><%= user.email %></td>
+            <td>
+              <a
+                class="btn btn-sm btn-primary"
+                href="/admin/users/<%= user.id %>">
+                edit
+              </a>
+              <form
+                class="d-inline-block"
+                action="/admin/roles/remove"
+                method="post">
+                <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+                <input type="hidden" name="userId" value="<%= user.id %>" />
+                <input type="hidden" name="roleId" value="<%= role.id %>" />
+                <button class="btn btn-sm btn-danger" type="submit">
+                  Remove from role
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

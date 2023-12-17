@@ -34,7 +34,7 @@ const app = express();
 app.set("view engine", "ejs");
 
 // middleware
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   session({

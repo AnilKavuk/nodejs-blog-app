@@ -8,7 +8,7 @@
     <%- include("../partials/nav") %>
     <div class="container mt-3">
       <div class="row">
-        <div class="col-md-12 mt-3">
+        <div class="col-md-12">
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
@@ -21,9 +21,7 @@
             <% roles.forEach(role => { %>
             <tr>
               <td>
-                <div class="d-flex justify-content-center mt-4">
-                  #<%= role.id %>
-                </div>
+                <div class="d-flex justify-content-center">#<%= role.id %></div>
               </td>
               <td><%= role.roleName %></td>
               <td><%= role.user_count %></td>
@@ -31,12 +29,12 @@
                 <div class="d-flex justify-content-between mt-4">
                   <a
                     class="btn btn-sm btn-primary"
-                    href="/admin/roles/<%= role.url %>">
+                    href="/admin/roles/<%= role.id %>">
                     edit
                   </a>
                   <a
                     class="btn btn-sm btn-danger"
-                    href="/admin/roles/delete/<%= role.url %>">
+                    href="/admin/roles/delete/<%= role.id %>">
                     delete
                   </a>
                 </div>

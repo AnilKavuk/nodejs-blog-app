@@ -63,6 +63,7 @@ const populate = async () => {
         image: "1.jpeg",
         homePage: true,
         approval: true,
+        userId: 2,
       },
       {
         title: "Python ile Sıfırdan İleri Seviye Python Programlama",
@@ -74,6 +75,7 @@ const populate = async () => {
         image: "2.jpeg",
         homePage: true,
         approval: true,
+        userId: 2,
       },
       {
         title: "Python Django ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -87,6 +89,7 @@ const populate = async () => {
         image: "3.jpeg",
         homePage: true,
         approval: true,
+        userId: 1,
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -98,6 +101,7 @@ const populate = async () => {
         image: "3.jpeg",
         homePage: true,
         approval: true,
+        userId: 1,
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -109,6 +113,7 @@ const populate = async () => {
         image: "3.jpeg",
         homePage: true,
         approval: true,
+        userId: 2,
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -120,6 +125,7 @@ const populate = async () => {
         image: "1.jpeg",
         homePage: true,
         approval: true,
+        userId: 2,
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -131,6 +137,7 @@ const populate = async () => {
         image: "6.jpeg",
         homePage: true,
         approval: true,
+        userId: 2,
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -142,6 +149,7 @@ const populate = async () => {
         image: "3.jpeg",
         homePage: true,
         approval: true,
+        userId: 1,
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -153,6 +161,7 @@ const populate = async () => {
         image: "2.jpeg",
         homePage: true,
         approval: true,
+        userId: 1,
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -164,6 +173,7 @@ const populate = async () => {
         image: "3.jpeg",
         homePage: true,
         approval: true,
+        userId: 1,
       },
     ]);
 
