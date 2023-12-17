@@ -6,6 +6,7 @@ const fs = require("fs");
 const { Op, Sequelize } = require("sequelize");
 const sequelize = require("../data/db");
 const slugField = require("../helpers/slug-field");
+const generateName = require("../helpers/random-generate-name");
 
 //? admin blog route
 const getBlogDelete = async (req, res) => {
@@ -70,7 +71,9 @@ const postBlogCreate = async (req, res) => {
     homepage: req.body.homepage == "on" ? 1 : 0,
     approval: req.body.approval == "on" ? 1 : 0,
     categoryIds: req.body.categories,
-    url: req.body.url ? req.body.url : req.body.title,
+    url: req.body.url
+      ? req.body.url + generateName(8)
+      : req.body.title + generateName(8),
     userId: req.session.userId,
   };
 
@@ -147,7 +150,9 @@ const postBlogEdit = async (req, res) => {
     homepage: req.body.homepage == "on" ? 1 : 0,
     approval: req.body.approval == "on" ? 1 : 0,
     categoryIds: req.body.categories,
-    url: req.body.url ? req.body.url : req.body.title,
+    url: req.body.url
+      ? req.body.url + generateName(8)
+      : req.body.title + generateName(8),
     userId: userId,
   };
 
