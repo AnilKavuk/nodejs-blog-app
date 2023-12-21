@@ -5,7 +5,7 @@ const { OAuth2Client } = require("google-auth-library");
 const oAuth2Client = new OAuth2Client(
   email.clientId,
   email.clientSecret,
-  email.RedirectUri
+  email.redirectUri
 );
 oAuth2Client.setCredentials({ refresh_token: email.refreshToken });
 
