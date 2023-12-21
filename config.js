@@ -16,7 +16,7 @@ const db = {
 
 const size = 3;
 
-const port = envs.PORT;
+const port = envs.PORT || 3000;
 
 const saltRounds = envs.SALT_ROUNDS;
 
@@ -29,6 +29,7 @@ const email = {
   clientId: envs.CLIENT_ID,
   clientSecret: envs.CLIENT_SECRET,
   refreshToken: envs.REFRESH_TOKEN,
+  RedirectUri: envs.REDIRECT_URI,
 };
 
 module.exports = { db, size, port, saltRounds, secretKey, email };
