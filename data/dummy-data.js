@@ -4,6 +4,7 @@ const slugField = require("../helpers/slug-field");
 const bcrypt = require("bcrypt");
 const Role = require("../models/role");
 const User = require("../models/user");
+const generateName = require("../helpers/random-generate-name");
 
 const populate = async () => {
   const count = await Category.count();
@@ -55,7 +56,7 @@ const populate = async () => {
     const blogs = await Blog.bulkCreate([
       {
         title: "Komple Uygulamalı Web Geliştirme Eğitimi",
-        url: slugField("Komple Uygulamalı Web Geliştirme Eğitimi"),
+        url: generateName(8),
         subTitle:
           "Sıfırdan ileri seviyeye 'Web Geliştirme': Html, Css, Sass, Flexbox, Bootstrap, Javascript, Angular, JQuery, Asp.Net Mvc&Core Mvc",
         description:
@@ -67,7 +68,7 @@ const populate = async () => {
       },
       {
         title: "Python ile Sıfırdan İleri Seviye Python Programlama",
-        url: slugField("Python ile Sıfırdan İleri Seviye Python Programlama"),
+        url: generateName(8),
         subTitle:
           "Sıfırdan İleri Seviye Python Dersleri.Veritabanı,Veri Analizi,Bot Yazımı,Web Geliştirme(Django)",
         description:
@@ -79,9 +80,7 @@ const populate = async () => {
       },
       {
         title: "Python Django ile Sıfırdan İleri Seviye Web Geliştirme",
-        url: slugField(
-          "Python Django ile Sıfırdan İleri Seviye Web Geliştirme"
-        ),
+        url: generateName(8),
         subTitle:
           "Python django ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.",
         description:
@@ -93,7 +92,7 @@ const populate = async () => {
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
-        url: slugField("Node.js ile Sıfırdan İleri Seviye Web Geliştirme"),
+        url: generateName(8),
         subTitle:
           "(Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
@@ -105,7 +104,7 @@ const populate = async () => {
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
-        url: slugField("Node.js ile Sıfırdan İleri Seviye Web Geliştirme"),
+        url: generateName(8),
         subTitle:
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
@@ -117,7 +116,7 @@ const populate = async () => {
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
-        url: slugField("Node.js ile Sıfırdan İleri Seviye Web Geliştirme"),
+        url: generateName(8),
         subTitle:
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
@@ -129,7 +128,7 @@ const populate = async () => {
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
-        url: slugField("Node.js ile Sıfırdan İleri Seviye Web Geliştirme"),
+        url: generateName(8),
         subTitle:
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
@@ -141,7 +140,7 @@ const populate = async () => {
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
-        url: slugField("Node.js ile Sıfırdan İleri Seviye Web Geliştirme"),
+        url: generateName(8),
         subTitle:
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
@@ -153,7 +152,7 @@ const populate = async () => {
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
-        url: slugField("Node.js ile Sıfırdan İleri Seviye Web Geliştirme"),
+        url: generateName(8),
         subTitle:
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:
@@ -165,7 +164,7 @@ const populate = async () => {
       },
       {
         title: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
-        url: slugField("Node.js ile Sıfırdan İleri Seviye Web Geliştirme"),
+        url: generateName(8),
         subTitle:
           "Node.js ile sıfırdan ileri seviye dinamik web uygulaması geliştirmeyi öğren.)",
         description:

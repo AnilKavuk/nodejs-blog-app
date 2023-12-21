@@ -16,10 +16,10 @@ const {
 const csrf = require("../middlewares/csrf-middleware");
 
 router.get("/register", csrf, getRegister);
-router.post("/register", postRegister);
+router.post("/register", csrf, postRegister);
 
 router.get("/login", csrf, getLogin);
-router.post("/login", postLogin);
+router.post("/login", csrf, postLogin);
 
 router.get("/reset-password", csrf, getReset);
 router.post("/reset-password", postReset);

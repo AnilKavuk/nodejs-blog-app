@@ -3,7 +3,7 @@ const Category = require("../models/category");
 const Role = require("../models/role");
 const User = require("../models/user");
 const fs = require("fs");
-const { Op, Sequelize } = require("sequelize");
+const { Op } = require("sequelize");
 const sequelize = require("../data/db");
 const slugField = require("../helpers/slug-field");
 const generateName = require("../helpers/random-generate-name");
@@ -56,6 +56,13 @@ const getBlogCreate = async (req, res) => {
     res.render("admin/blog-create", {
       title: "add blog",
       categories: categories,
+      message: { text: undefined, class: undefined },
+      values: {
+        title: "",
+        subTitle: "",
+        url: "",
+        description: "",
+      },
     });
   } catch (err) {
     console.warn(err);
@@ -67,7 +74,7 @@ const postBlogCreate = async (req, res) => {
     title: req.body.title,
     subTitle: req.body.subTitle ? req.body.subTitle : null,
     description: req.body.description,
-    image: req.file.filename,
+    image: "",
     homepage: req.body.homepage == "on" ? 1 : 0,
     approval: req.body.approval == "on" ? 1 : 0,
     categoryIds: req.body.categories,
@@ -78,6 +85,21 @@ const postBlogCreate = async (req, res) => {
   };
 
   try {
+    if (data.title == "") {
+      throw new Error("Title cannot be left blank.");
+    }
+    if (data.title.length < 5 || data.title.length > 20) {
+      throw new Error("title between 5 and 20 characters must contain.");
+    }
+    if (data.description == "") {
+      throw new Error("Description cannot be left blank.");
+    }
+    if (req.file) {
+      data.image = req.file.filename;
+      fs.unlink("./public/images/" + req.file.filename, (err) => {
+        console.warn(err);
+      });
+    }
     const blog = await Blog.create({
       title: data.title,
       subTitle: data.subTitle,
@@ -104,7 +126,23 @@ const postBlogCreate = async (req, res) => {
     }
     res.redirect("/admin/blogs?action=create");
   } catch (err) {
-    console.warn(err);
+    let msg = "";
+
+    if (err instanceof Error) {
+      msg += err.message;
+
+      res.render("admin/blog-create", {
+        title: "add blog",
+        categories: await Category.findAll(),
+        message: { text: msg, class: "danger" },
+        values: {
+          title: data.title,
+          subTitle: data.subTitle,
+          url: data.url,
+          description: data.description,
+        },
+      });
+    }
   }
 };
 

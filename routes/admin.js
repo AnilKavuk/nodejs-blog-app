@@ -40,6 +40,7 @@ router.get("/blog/create", isModerator, csrf, getBlogCreate);
 router.post(
   "/blog/create",
   isModerator,
+  csrf,
   imgUpload.upload.single("image"),
   postBlogCreate
 );
