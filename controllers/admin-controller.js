@@ -193,6 +193,7 @@ const postBlogEdit = async (req, res) => {
       : req.body.title + generateName(8),
     userId: userId,
   };
+  const isAdmin = req.session.roles?.includes("admin");
 
   if (req.file) {
     await fs.unlink("./public/images/" + req.body.imageName, (err) => {
@@ -202,10 +203,12 @@ const postBlogEdit = async (req, res) => {
 
   try {
     const blog = await Blog.findOne({
-      where: {
-        id: blogId,
-        userId: userId,
-      },
+      where: isAdmin
+        ? { url: slugs }
+        : {
+            url: slugs,
+            userId: userId,
+          },
       include: {
         model: Category,
         attributes: ["id"],

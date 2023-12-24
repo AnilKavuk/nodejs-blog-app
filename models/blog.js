@@ -11,6 +11,7 @@ const Blog = sequelize.define(
     url: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     subTitle: {
       type: DataTypes.STRING,
@@ -35,6 +36,15 @@ const Blog = sequelize.define(
   },
   {
     timestamps: true,
+    validate: {
+      checkValidOnay() {
+        if (this.homePage && !this.approval) {
+          throw new Error(
+            "You didn't approve the blog page you put on the homepage."
+          );
+        }
+      },
+    },
   }
 );
 

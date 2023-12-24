@@ -1,4 +1,4 @@
-const { saltRounds, email } = require("../config");
+const { email } = require("../config");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const emailService = require("../helpers/send-mail");
@@ -9,6 +9,7 @@ const getRegister = async (req, res) => {
   try {
     return res.render("auth/register", {
       title: "register",
+      message: { text: undefined, class: "danger" },
     });
   } catch (err) {
     console.warn(err);
@@ -17,17 +18,9 @@ const getRegister = async (req, res) => {
 
 const postRegister = async (req, res) => {
   const data = req.body;
-  data.password = bcrypt.hashSync(req.body.password, Number(saltRounds));
 
   try {
-    const user = await User.findOne({ where: { email: data.email } });
-    if (user) {
-      req.session.message = {
-        text: "You have already registered with the e-mail address you entered.",
-        class: "warning",
-      };
-      return res.redirect("login");
-    }
+    await User.findOne({ where: { email: data.email } });
     const newUser = await User.create({
       fullName: data.name,
       email: data.email,
@@ -51,7 +44,14 @@ const postRegister = async (req, res) => {
     };
     return res.redirect("login");
   } catch (err) {
-    console.warn(err);
+    let msg = "";
+    for (let e of err.errors) {
+      msg += e.message + " ";
+    }
+    return res.render("auth/register", {
+      title: "register",
+      message: { text: msg, class: "danger" },
+    });
   }
 };
 
