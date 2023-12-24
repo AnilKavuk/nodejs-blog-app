@@ -188,9 +188,7 @@ const postBlogEdit = async (req, res) => {
     homepage: req.body.homepage == "on" ? 1 : 0,
     approval: req.body.approval == "on" ? 1 : 0,
     categoryIds: req.body.categories,
-    url: req.body.url
-      ? req.body.url + generateName(8)
-      : req.body.title + generateName(8),
+    url: req.body.url ? req.body.url : req.body.title,
     userId: userId,
   };
   const isAdmin = req.session.roles?.includes("admin");
@@ -204,9 +202,9 @@ const postBlogEdit = async (req, res) => {
   try {
     const blog = await Blog.findOne({
       where: isAdmin
-        ? { url: slugs }
+        ? { id: blogId }
         : {
-            url: slugs,
+            id: blogId,
             userId: userId,
           },
       include: {

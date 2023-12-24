@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../data/db");
 const { saltRounds } = require("../config");
+const bcrypt = require("bcrypt");
 
 const User = sequelize.define(
   "user",
@@ -39,6 +40,10 @@ const User = sequelize.define(
       validate: {
         notEmpty: {
           msg: "Password cannot be left blank.<br/>",
+        },
+        len: {
+          args: [5, 10],
+          msg: "There should be between 5-10 passwords.<br/>",
         },
       },
     },
