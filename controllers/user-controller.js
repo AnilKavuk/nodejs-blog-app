@@ -19,7 +19,7 @@ const blogsDetails = async (req, res) => {
         blog: blog,
       });
     }
-    res.redirect("/");
+    return res.redirect("/404");
   } catch (err) {
     console.warn(err);
   }

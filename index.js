@@ -13,6 +13,8 @@ const path = require("path");
 const sequelize = require("./data/db");
 const dummyData = require("./data/dummy-data");
 const locals = require("./middlewares/locals");
+const log = require("./middlewares/log");
+const error = require("./middlewares/error-handling");
 
 // models
 const Category = require("./models/category");
@@ -59,6 +61,12 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/admin", adminRoutes);
 app.use("/account", authRoutes);
 app.use(userRoutes);
+app.use(log);
+app.use(error);
+app.use("*", (req, res, next) => {
+  res.status(404).render("error/404", { title: "not found" });
+  next();
+});
 
 Blog.belongsTo(User);
 User.hasMany(Blog);

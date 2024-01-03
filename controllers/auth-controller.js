@@ -4,19 +4,20 @@ const bcrypt = require("bcrypt");
 const emailService = require("../helpers/send-mail");
 const crypto = require("crypto");
 const { Op } = require("sequelize");
+const { error } = require("console");
 
-const getRegister = async (req, res) => {
+const getRegister = async (req, res, next) => {
   try {
     return res.render("auth/register", {
       title: "register",
       message: { text: undefined, class: "danger" },
     });
   } catch (err) {
-    console.warn(err);
+    next(err);
   }
 };
 
-const postRegister = async (req, res) => {
+const postRegister = async (req, res, next) => {
   const data = req.body;
 
   try {
@@ -45,17 +46,24 @@ const postRegister = async (req, res) => {
     return res.redirect("login");
   } catch (err) {
     let msg = "";
-    for (let e of err.errors) {
-      msg += e.message + " ";
+    if (
+      err.name == "SequlizeValidationError" ||
+      err.name == "SequelizeUniqueConstraintError"
+    ) {
+      for (let e of err.errors) {
+        msg += e.message + " ";
+      }
+      return res.render("auth/register", {
+        title: "register",
+        message: { text: msg, class: "danger" },
+      });
+    } else {
+      next(err);
     }
-    return res.render("auth/register", {
-      title: "register",
-      message: { text: msg, class: "danger" },
-    });
   }
 };
 
-const getLogin = async (req, res) => {
+const getLogin = async (req, res, next) => {
   const message = req.session.message;
   delete req.session.message;
   try {
@@ -115,11 +123,11 @@ const postLogin = async (req, res) => {
       });
     }
   } catch (err) {
-    console.warn(err);
+    next(err);
   }
 };
 
-const getLogout = async (req, res) => {
+const getLogout = async (req, res, next) => {
   try {
     await req.session.destroy();
     return res.redirect("login");
@@ -137,11 +145,11 @@ const getReset = async (req, res) => {
       message: message,
     });
   } catch (err) {
-    console.warn(err);
+    next(err);
   }
 };
 
-const postReset = async (req, res) => {
+const postReset = async (req, res, next) => {
   const email = req.body.email;
   try {
     var token = crypto.randomBytes(32).toString("hex");
@@ -179,11 +187,11 @@ const postReset = async (req, res) => {
     };
     return res.redirect("login");
   } catch (err) {
-    console.warn(err);
+    next(err);
   }
 };
 
-const getNewPassword = async (req, res) => {
+const getNewPassword = async (req, res, next) => {
   const token = req.params.token;
   try {
     const user = await User.findOne({
@@ -213,11 +221,11 @@ const getNewPassword = async (req, res) => {
       userId: user.id,
     });
   } catch (err) {
-    console.warn(err);
+    next(err);
   }
 };
 
-const postNewPassword = async (req, res) => {
+const postNewPassword = async (req, res, next) => {
   const token = req.body.token;
   const userId = req.body.userId;
   const newPassword = req.body.password;
@@ -251,7 +259,7 @@ const postNewPassword = async (req, res) => {
     };
     return res.redirect("login");
   } catch (err) {
-    console.warn(err);
+    next(err);
   }
 };
 
