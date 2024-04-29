@@ -42,8 +42,8 @@ const User = sequelize.define(
           msg: "Password cannot be left blank.<br/>",
         },
         len: {
-          args: [5, 10],
-          msg: "There should be between 5-10 passwords.<br/>",
+          args: [5, 20],
+          msg: "There should be between 5-20 passwords.<br/>",
         },
       },
     },

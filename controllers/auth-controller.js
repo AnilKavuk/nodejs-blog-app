@@ -1,10 +1,9 @@
-const { email } = require("../config");
+const { email, saltRounds } = require("../config");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const emailService = require("../helpers/send-mail");
 const crypto = require("crypto");
 const { Op } = require("sequelize");
-const { error } = require("console");
 
 const getRegister = async (req, res, next) => {
   try {
@@ -248,7 +247,7 @@ const postNewPassword = async (req, res, next) => {
       return res.redirect("login");
     }
 
-    user.password = await bcrypt.hashSync(newPassword, Number(saltRounds));
+    user.password = newPassword;
     user.resetToken = null;
     user.resetTokenExpiration = null;
     await user.save();

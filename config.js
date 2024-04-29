@@ -30,6 +30,7 @@ const email = {
   clientSecret: envs.CLIENT_SECRET,
   refreshToken: envs.REFRESH_TOKEN,
   redirectUri: envs.REDIRECT_URI,
+  tokenEndPoint: envs.TOKEN_ENDPOINT,
 };
 
 module.exports = { db, size, port, saltRounds, secretKey, email };
